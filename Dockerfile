@@ -47,4 +47,4 @@ COPY . .
 EXPOSE 80
 
 # Run the application.
-CMD uvicorn main:app --reload --host 0.0.0.0 --port 80
+CMD uvicorn main:app --reload --host 0.0.0.0 --port 80  --reload --reload-dir /app
