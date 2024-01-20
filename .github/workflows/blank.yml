@@ -14,11 +14,26 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:        
+        python-version: '3.7'
+    - name: Install dependencies
+      run: |
+          python -m pip install --upgrade pip
+          pip install awscli
+    - name: Setup AWS
+      run: |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 912545771260.dkr.ecr.us-east-1.amazonaws.com
+      env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          
     - name: Docker Login
       run: docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}      
 
 
-    - name: Docker Build
-      run: docker build . -t index.docker.io/maxiplux/simple-python-api
-    - name: Docker Push
-      run: docker push index.docker.io/maxiplux/simple-python-api
+    - name: Docker Build Local
+      run: docker build . -t maxiplux:latest 912545771260.dkr.ecr.us-east-1.amazonaws.com/maxiplux:latest
+    - name: Docker Push AWS ECR
+      run: docker push 912545771260.dkr.ecr.us-east-1.amazonaws.com/maxiplux:latest
