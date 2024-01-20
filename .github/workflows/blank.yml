@@ -34,6 +34,6 @@ jobs:
 
 
     - name: Docker Build Local
-      run: docker build . -t maxiplux:latest 912545771260.dkr.ecr.us-east-1.amazonaws.com/maxiplux:latest
+      run: docker build . -t 912545771260.dkr.ecr.us-east-1.amazonaws.com/maxiplux:latest
     - name: Docker Push AWS ECR
       run: docker push 912545771260.dkr.ecr.us-east-1.amazonaws.com/maxiplux:latest
