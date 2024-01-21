@@ -36,7 +36,7 @@ jobs:
     - name: Docker Build Local
       run: docker build . -t 912545771260.dkr.ecr.us-east-1.amazonaws.com/weclouddata-9636e730-68c3-9441-874e-b2a482583890/maxiplux-python-2024:latest
     - name: Docker Push AWS ECR
-      run: docker 912545771260.dkr.ecr.us-east-1.amazonaws.com/weclouddata-9636e730-68c3-9441-874e-b2a482583890/maxiplux-python-2024:latest
+      run: docker push 912545771260.dkr.ecr.us-east-1.amazonaws.com/weclouddata-9636e730-68c3-9441-874e-b2a482583890/maxiplux-python-2024:latest
     - name: change permisions to deploy.sh
       run: chmod +x deploy.sh
     - name: Deploy App Runner
