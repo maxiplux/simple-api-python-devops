@@ -34,9 +34,10 @@ jobs:
 
 
     - name: Docker Build Local
-      run: docker build -t weclouddata-4ceff29f-f181-0f04-1dfe-8e60b094aaa5 .
+      run: docker build -t weclouddata-0d6564c1-ef97-eb39-53b1-77b89ddd20ba .
     - name: Tagging 
       run: docker tag weclouddata-0d6564c1-ef97-eb39-53b1-77b89ddd20ba:latest 912545771260.dkr.ecr.us-east-1.amazonaws.com/weclouddata-0d6564c1-ef97-eb39-53b1-77b89ddd20ba:latest
+
 
     - name: Docker Push AWS ECR
       run: docker push 912545771260.dkr.ecr.us-east-1.amazonaws.com/weclouddata-0d6564c1-ef97-eb39-53b1-77b89ddd20ba:latest
