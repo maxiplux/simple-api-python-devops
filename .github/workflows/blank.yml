@@ -24,7 +24,7 @@ jobs:
           pip install awscli
     - name: Setup AWS
       run: |
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/e4l7l3b1
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 912545771260.dkr.ecr.us-east-1.amazonaws.com
       env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -34,12 +34,12 @@ jobs:
 
 
     - name: Docker Build Local
-      run: docker build -t public.ecr.aws/e4l7l3b1/maxiplux .
+      run: docker build -t weclouddata-4ceff29f-f181-0f04-1dfe-8e60b094aaa5 .
     - name: Tagging 
-      run: docker tag public.ecr.aws/e4l7l3b1/maxiplux:latest
+      run: docker tag weclouddata-4ceff29f-f181-0f04-1dfe-8e60b094aaa5:latest 912545771260.dkr.ecr.us-east-1.amazonaws.com/weclouddata-4ceff29f-f181-0f04-1dfe-8e60b094aaa5:latest
 
     - name: Docker Push AWS ECR
-      run: docker push public.ecr.aws/e4l7l3b1/maxiplux:latest
+      run: docker push weclouddata-4ceff29f-f181-0f04-1dfe-8e60b094aaa5:latest 912545771260.dkr.ecr.us-east-1.amazonaws.com/weclouddata-4ceff29f-f181-0f04-1dfe-8e60b094aaa5:latest
     - name: change permisions to deploy.sh
       run: chmod +x deploy.sh
     - name: Deploy App Runner
