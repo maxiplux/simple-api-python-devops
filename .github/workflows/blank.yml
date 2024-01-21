@@ -40,8 +40,4 @@ jobs:
 
     - name: Docker Push AWS ECR
       run: docker push 912545771260.dkr.ecr.us-east-1.amazonaws.com/weclouddata-4ceff29f-f181-0f04-1dfe-8e60b094aaa5:latest
-    - name: change permisions to deploy.sh
-      run: chmod +x deploy.sh
-    - name: Deploy App Runner
-      run: sh deploy.sh
-      
+
