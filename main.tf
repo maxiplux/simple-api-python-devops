@@ -46,23 +46,24 @@ resource "aws_iam_access_key" "weclouddata" {
 }
 
 
-
+# Attach AppRunner policy to the user
 resource "aws_iam_user_policy_attachment" "app_runner" {
   user       = aws_iam_user.weclouddata.name
   policy_arn = "arn:aws:iam::aws:policy/AWSAppRunnerFullAccess"
 }
+# Attach EC2 Container Registry policy to the user
 resource "aws_iam_user_policy_attachment" "countainer_registry" {
   user       = aws_iam_user.weclouddata.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
 }
-
+# Attach EC2 Container Registry Public policy to the user
 resource "aws_iam_user_policy_attachment" "countainer_registry_public" {
   user       = aws_iam_user.weclouddata.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonElasticContainerRegistryPublicFullAccess"
 }
 
 
-
+# Create an ECR repository
 resource "aws_ecr_repository" "weclouddata" {
   name                 = "weclouddata-${random_uuid.unique_service_name.result}"
   image_tag_mutability = "MUTABLE"
@@ -72,13 +73,15 @@ resource "aws_ecr_repository" "weclouddata" {
     scan_on_push = false
   }
 }
-
+# Build and push Docker image to ECR
 resource "null_resource" "docker_image_to_ecr" {
   depends_on = [aws_ecr_repository.weclouddata]
 
   provisioner "local-exec" {
-
-
+    #The key to allow to deploy the image is the buildx, we cannot deploy ARM images to AppRunner, so we need to build the image for amd64
+    #This was one the biggest challenges that I had, I was trying to build and deploy  the image for ARM and deploy it to AppRunner, but it was not working
+    #However, when I change to amd64 it worked
+    #This code was tested in a M3 Macbook  and Github Actions. I'm not sure if it will work in other platforms yet
     command = <<EOF
     #!/bin/bash
     echo "Start:Reading enviroment variables"
@@ -98,25 +101,23 @@ resource "null_resource" "docker_image_to_ecr" {
   }
 }
 
-
+# Output the ECR repository URL IMAGE TAG
 output "aws_image_repository_weclouddata" {
   value = "${aws_ecr_repository.weclouddata.repository_url}:latest"
 }
 
-
+# Output the ECR repository URL
 output "aws_ecr_repository_weclouddata" {
   value = aws_ecr_repository.weclouddata.repository_url
 }
 
-output "user_name" {
-  value = aws_iam_user.weclouddata.name
-}
-
+#We want to have less privileges as possible so we are going to create a new user with only the permissions that we need.
+# Output the IAM access key ID
 output "access_key_id" {
   value = aws_iam_access_key.weclouddata.id
 
 }
-
+# Output the IAM secret access key
 output "secret_access_key" {
   value     = aws_iam_access_key.weclouddata.secret
   sensitive = true
@@ -132,7 +133,7 @@ output "random_uuid_unique_service_name" {
 }
 
 
-
+# Create an IAM role for AppRunner
 resource "aws_iam_role" "app_runner" {
   name = "app_runner-weclouddata"
 
@@ -150,13 +151,14 @@ resource "aws_iam_role" "app_runner" {
     ]
   })
 }
+# Attach AppRunner service policy to the role
 resource "aws_iam_role_policy_attachment" "app_runner" {
   role       = aws_iam_role.app_runner.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
 }
 
 
-
+# Create an AppRunner service
 resource "aws_apprunner_service" "weclouddata" {
   service_name = "weclouddata${random_integer.random_integer_service_id.result}"
   depends_on   = [aws_iam_role_policy_attachment.app_runner, null_resource.docker_image_to_ecr]
@@ -181,6 +183,9 @@ resource "aws_apprunner_service" "weclouddata" {
   }
 
 }
+
+# Output the AppRunner service URL
+#if you want to use the service url you need to create a dns record, therefore we need to print that
 output "apprunner_service_weclouddata" {
   value = aws_apprunner_service.weclouddata.service_url
 }
