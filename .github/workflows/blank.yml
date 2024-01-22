@@ -24,21 +24,30 @@ jobs:
           pip install awscli
     - name: Setup AWS
       run: |
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 912545771260.dkr.ecr.us-east-1.amazonaws.com
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $AWS_ECR_ID.dkr.ecr.us-east-1.amazonaws.com
       env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ECR_ID: ${{ secrets.AWS_ECR_ID }}
+          AWS_ECR_IMAGE: ${{ secrets.AWS_ECR_IMAGE_WITH_TAG_ID }}
           
-    - name: Docker Login
-      run: docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}      
-
-
+    
     - name: Docker Build Local
-      run: docker build -t weclouddata-0d6564c1-ef97-eb39-53b1-77b89ddd20ba .
+      run: docker build -t $AWS_ECR_IMAGE .    
+      env:
+          AWS_ECR_ID: ${{ secrets.AWS_ECR_ID }}
+          AWS_ECR_IMAGE: ${{ secrets.AWS_ECR_IMAGE }}
+    
     - name: Tagging 
-      run: docker tag weclouddata-0d6564c1-ef97-eb39-53b1-77b89ddd20ba:latest 912545771260.dkr.ecr.us-east-1.amazonaws.com/weclouddata-0d6564c1-ef97-eb39-53b1-77b89ddd20ba:latest
+      run: docker tag $AWS_ECR_ID:latest $AWS_ECR_ID.dkr.ecr.us-east-1.amazonaws.com/$AWS_ECR_IMAGE:latest
+      env:
+          AWS_ECR_ID: ${{ secrets.AWS_ECR_ID }}
+          AWS_ECR_IMAGE: ${{ secrets.AWS_ECR_IMAGE }}
 
 
     - name: Docker Push AWS ECR
       run: docker push 912545771260.dkr.ecr.us-east-1.amazonaws.com/weclouddata-0d6564c1-ef97-eb39-53b1-77b89ddd20ba:latest
+      env:
+          AWS_ECR_ID: ${{ secrets.AWS_ECR_ID }}
+          AWS_ECR_IMAGE_WITH_TAG_ID: ${{ secrets.AWS_ECR_IMAGE_WITH_TAG_ID }}
 
