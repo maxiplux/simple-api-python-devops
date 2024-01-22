@@ -29,11 +29,15 @@ These instructions will guide you on how to deploy your web app on AWS.
 
 ### Steps
 
-1. **Web App**: Create your web app or clone an existing one from GitHub.
-2. **Dockerization**: Write a Dockerfile for your app.
-3. **DockerHub Account**: Create a DockerHub account if you don't have one.
-4. **Build Docker Image**: Use Docker Buildx to build your Docker image in both x86_64 and arm64 formats. Push the image to your DockerHub registry.
-5. **AWS Deployment**: Launch an EC2 instance on AWS. Pull your Docker image from DockerHub and run it on the EC2 instance.
+1. **Web App**: Fork the https://github.com/maxiplux/simple-api-python-devops.git in your GitHub Account
+2. **Download the code and execute locally**:
+3.    terraform init
+4.    terraform apply -auto-approve
+5.    Copy the access_key_id value, and then export secret key with  terraform output secret_access_key
+6.  
+7. **Dockerization**: Write a Dockerfile for your app.
+8. **Build Docker Image**: Use Docker Buildx to build your Docker image in both x86_64 and arm64 formats. Push the image to your DockerHub registry.
+9. **AWS Deployment**: Launch an EC2 instance on AWS. Pull your Docker image from DockerHub and run it on the EC2 instance.
 
 ## Built With
 
