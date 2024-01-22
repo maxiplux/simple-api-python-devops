@@ -34,13 +34,13 @@ jobs:
           
     
     - name: Docker Build Local
-      run: docker build -t $AWS_ECR_IMAGE .    
+      run: docker build -t weclouddata-d7af437e-1f59-7a70-7b65-8e04dab424a1 .    
       env:
           AWS_ECR_ID: ${{ secrets.AWS_ECR_ID }}
           AWS_ECR_IMAGE: ${{ secrets.AWS_ECR_IMAGE }}
     
     - name: Tagging 
-      run: docker tag weclouddata-d7af437e-1f59-7a70-7b65-8e04dab424a1:latest 912545771260.dkr.ecr.us-east-1.amazonaws.com/$weclouddata-d7af437e-1f59-7a70-7b65-8e04dab424a1:latest
+      run: docker tag weclouddata-d7af437e-1f59-7a70-7b65-8e04dab424a1:latest 912545771260.dkr.ecr.us-east-1.amazonaws.com/weclouddata-d7af437e-1f59-7a70-7b65-8e04dab424a1:latest
       env:
           AWS_ECR_ID: ${{ secrets.AWS_ECR_ID }}
           AWS_ECR_IMAGE: ${{ secrets.AWS_ECR_IMAGE }}
