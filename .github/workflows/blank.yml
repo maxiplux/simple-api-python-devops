@@ -22,8 +22,9 @@ jobs:
       run: |
           python -m pip install --upgrade pip
           pip install awscli
-    - name: Setup AWS
+    - name: Setup AWS      
       run: |
+          echo ${{AWS_ECR_ID}}
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin '${{AWS_ECR_ID}}'.dkr.ecr.us-east-1.amazonaws.com
       env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
