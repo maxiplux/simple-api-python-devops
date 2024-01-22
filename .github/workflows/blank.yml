@@ -40,7 +40,7 @@ jobs:
           AWS_ECR_IMAGE: ${{ secrets.AWS_ECR_IMAGE }}
     
     - name: Tagging 
-      run: docker tag $AWS_ECR_ID:latest $AWS_ECR_ID.dkr.ecr.us-east-1.amazonaws.com/$AWS_ECR_IMAGE:latest
+      run: docker tag weclouddata-d7af437e-1f59-7a70-7b65-8e04dab424a1:latest 912545771260.dkr.ecr.us-east-1.amazonaws.com/$weclouddata-d7af437e-1f59-7a70-7b65-8e04dab424a1:latest
       env:
           AWS_ECR_ID: ${{ secrets.AWS_ECR_ID }}
           AWS_ECR_IMAGE: ${{ secrets.AWS_ECR_IMAGE }}
