@@ -39,7 +39,15 @@ These instructions will guide you on how to deploy your web app on AWS.
 terraform init
 terraform apply -auto-approve
 ```
+
+#terraform output secret_access_key
 6.    Copy the access_key_id value, and then export secret key with the command "terraform output secret_access_key"
+```
+terraform output secret_access_key
+```
+6.1 All these steps in a video.
+
+
 7.    ![output](key-outputs.png)
  
 
