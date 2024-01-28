@@ -1,18 +1,22 @@
 # Simple Web App Deployment on AWS using Docker
 
-## Architecture
+## Original request architecture.
+![Architecture](DevOps%20-%20Project%203%20-%20Containerize%20Apps.png)
+
+
+## Architecture answer to this challengue.
 ![Architecture](diagram.png)
 
-The objective of this project is to deploy a web application as a Docker container on AWS, making it accessible via the public internet.
-The original requeriments are in https://franciscomosquera.com/2024/01/13/project-2-infrastructure-provisioning-automation/ 
+The project's goal is to get a web app up and running in a Docker container on AWS, so it's available online for anyone to use. You can check out the starting point at Francisco Mosquera's Blog (https://franciscomosquera.com/2024/01/13/project-2-infrastructure-provisioning-automation/). My design's a bit different though. I've got a bunch of projects on my GitHub that look the same, and I didn't want to just copy and paste. Plus, I was keen on learning how to use AWS AppRunner for deploying apps. Before I went ahead with changing things up, I made sure to get the okay to switch up the original plan for something a bit more complex. I also took a good look at other AWS services that could handle enterprise monolithic applications , with Elasticity and Fault Tolerance. The borders  between   Elasticity and Fault tolerance, are  foundational of  the resilience applications.
+
 
 ## Requirements
 
 1. **Web App**: Create a simple web app Python app and ploy .
 2. **Dockerization**: Dockerize the app and create a Dockerfile with instructions for building a Docker image of the app.
-3. **DockerHub Account**: If not already owned, create one to push the Docker image.
+3. **AWS Container Register **: If not already owned, create one to push the Docker image.
 4. **Build Docker Image**: Use Docker Buildx tool to build the image in both x86_64 and arm64 formats, then push it to your DockerHub registry(We changed it to Amazon ECR, previous approval).
-5. **AWS Deployment**: Deploy the container on AWS by creating and launching an EC2 instance that will host the app container. Ensure the container is accessible over the public internet y(We changed it to Amazon AppRunner, previous approval)..
+5. **AWS Deployment**: Deploy the container on AWS by creating and launching an EC2 instance that will host the app container. Ensure the container is accessible over the public internet (I changed it to Amazon AppRunner, previous approval).
 
 ## Getting Started
 
@@ -21,12 +25,11 @@ These instructions will guide you on how to deploy your web app on AWS.
 ### Prerequisites
 
 - Docker installed on your local machine.
-- DockerHub account.
 - Terraform
-- GitHub Actions
+- GitHub Actions ( Basic knowlage )
 - Git
 - aws CLI 
-- AWS account in the .config file.
+- AWS account with your credentials in the .config file of your home machine.
 
 ### Steps
 
@@ -54,7 +57,7 @@ terraform apply -auto-approve
 - **IAM User and Access Key**: IAM user and an access key for AWS services interaction, the terraform here is going to create a unique account with the permission to execute ECR and AppRunner only.
 - **IAM Policies Attachment**: Attaches necessary policies to the IAM user for App Runner, and ECR Container Registry.
 - **ECR Repository**: Creates an ECR repository for the Docker image ( private seeting with Access key and Client Credentials).
-- **Docker Image Deployment**: Hacks with null resource, and a local-exec provisioner to build and push a Docker image to the ECR repository.
+- **Docker Image Deployment**: Hacks with terraform null resource, and a local-exec provisioner to build and push a Docker image to the ECR repository.
 - **Outputs**: Various outputs including the ECR repository URL and IAM access credentials, don't execuite it in enterprise enviroments without a deep understanding.
 - **IAM Role for App Runner**: Creates an IAM role for the App Runner service to access ECR.
 - **App Runner Service**: Sets up an App Runner service to deploy the application, and enable automatic deployments from Github Actions.
