@@ -187,7 +187,7 @@ resource "aws_apprunner_service" "weclouddata" {
 # Output the AppRunner service URL
 #if you want to use the service url you need to create a dns record, therefore we need to print that
 output "apprunner_service_weclouddata" {
-  value = aws_apprunner_service.weclouddata.service_url
+  value = "https://${aws_apprunner_service.weclouddata.service_url}"
 }
 
 
