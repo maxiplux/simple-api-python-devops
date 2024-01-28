@@ -135,7 +135,7 @@ output "random_uuid_unique_service_name" {
 
 # Create an IAM role for AppRunner
 resource "aws_iam_role" "app_runner" {
-  name = "app_runner-weclouddata"
+  name = "app_runner-weclouddata-${random_integer.random_integer_service_id.result}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
