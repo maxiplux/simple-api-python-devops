@@ -32,10 +32,12 @@ These instructions will guide you on how to deploy your web app on AWS.
 
 1. **Web App**: Fork the https://github.com/maxiplux/simple-api-python-devops.git in your GitHub Account
 2. **Download the code and execute locally**:
-3.    terraform init
-4.    terraform apply -auto-approve
-5.    Copy the access_key_id value, and then export secret key with the command "terraform output secret_access_key"
-6.    ![output](key-outputs.png)
+```
+terraform init
+terraform apply -auto-approve
+```
+6.    Copy the access_key_id value, and then export secret key with the command "terraform output secret_access_key"
+7.    ![output](key-outputs.png)
  
 
 
