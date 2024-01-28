@@ -29,7 +29,7 @@ These instructions will guide you on how to deploy your web app on AWS.
 - GitHub Actions ( Basic knowlage )
 - Git
 - aws CLI 
-- AWS account with your credentials in the .config file of your home machine.
+- AWS account with your credentials in the .credentials file for you local machine AWS cli configuration.
 
 ### Steps
 
