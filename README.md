@@ -48,7 +48,12 @@ terraform output secret_access_key
 6.1 All these steps in a video.
 
 
-7.    ![output](key-outputs.png)
+7.   Delete all resources.
+   ```
+ terraform destroy  -auto-approve
+```
+Video with all details
+https://youtu.be/4dv96SxxSU0
  
 
 
