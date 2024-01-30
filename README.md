@@ -41,19 +41,25 @@ terraform apply -auto-approve
 ```
 
 #terraform output secret_access_key
-6.    Copy the access_key_id value, and then export secret key with the command "terraform output secret_access_key"
+3.    Copy the access_key_id value, and then export secret key with the command "terraform output secret_access_key"
 ```
 terraform output secret_access_key
 ```
-6.1 All these steps in a video.
+4.  Setup up with the credentials and secrets from the previous steps in your GitHub report ( Previously Fork) 
+```
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+CONTAINER_IMAGE_NAME
+CONTAINER_REGISTRY_ID
+```
 
-
-7.   Delete all resources.
-   ```
+5. Delete all resources.
+   
+```
  terraform destroy  -auto-approve
 ```
-Video with all details
-https://youtu.be/4dv96SxxSU0
+#Video with all details
+## https://youtu.be/4dv96SxxSU0
  
 
 
